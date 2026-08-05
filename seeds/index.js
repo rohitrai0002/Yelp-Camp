@@ -1,11 +1,12 @@
 //self contained file to connect to mongoose and usethe model built by mongoose
 
+require('dotenv').config()
 const mongoose = require ('mongoose')
 const cities = require('./cities.js')
 const {places, descriptors} = require('./seedHelpers.js')
 const Campground = require('../models/campground.js')
 
-mongoose.connect('mongodb://localhost:27017/yelp-camp')
+mongoose.connect(process.env.MONGO_URI || 'mongodb://mongo:27017/yelp-camp')
     .then(()=>console.log("DB Connected"))
     .catch(err=>console.log("error",err))
 

@@ -1,6 +1,7 @@
 //express is a fuynction thats why needs to be called while path is an onject
 //path is a js module
-const express = require('express') 
+require('dotenv').config()
+const express = require('express')
 const path = require('path')
 const mongoose = require('mongoose')
 const Campground = require("./models/campground.js")
@@ -8,7 +9,7 @@ const methodOverrirde = require('method-override')
 const ejsMate = require('ejs-mate')
 
 
-mongoose.connect('mongodb://localhost:27017/yelp-camp')
+mongoose.connect(process.env.MONGO_URI || 'mongodb://mongo:27017/yelp-camp')
     .then(() => console.log("DB Connected"))
     .catch(err => console.log(err));
 
@@ -16,7 +17,7 @@ const db = mongoose.connection
 db.on("error", console.error.bind(console, "connection error"))
 db.once("open", () => {
     console.log("db connected");
-})
+})                 
 
 const app = express()
 
@@ -77,6 +78,7 @@ app.delete('/campgrounds/:id', async (req,res) => {
     res.redirect('/campgrounds')
 })
 
-app.listen(4000, ()=>{
-    console.log('serving on port 4000')
+const port = process.env.PORT || 4000
+app.listen(port, ()=>{
+    console.log(`serving on port ${port}`)
 })

@@ -1,0 +1,40 @@
+services:
+  app:
+    build: .
+    container_name: yelpcamp-app
+    restart: unless-stopped
+    ports:
+      - "${PORT:-4000}:${PORT:-4000}"
+    environment:
+      MONGO_URI: mongodb://mongo:27017/yelp-camp
+      PORT: ${PORT:-4000}
+      NODE_ENV: production
+    depends_on:
+      mongo:
+        condition: service_healthy
+    networks:
+      - yelpcamp-net
+
+  mongo:
+    image: mongo:7
+    container_name: yelpcamp-mongo
+    restart: unless-stopped
+    ports:
+      - "27018:27017"
+    volumes:
+      - mongo-data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    networks:
+      - yelpcamp-net
+
+volumes:
+  mongo-data:
+
+networks:
+  yelpcamp-net:
+    driver: bridge
