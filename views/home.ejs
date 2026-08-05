@@ -1,11 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=<h1>>, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>Hello! Yelp camp</h1>
-</body>
-</html>
+<% layout('layouts/boilerplate.ejs') %>
+<div class="px-4 py-5 my-5 text-center">
+    <h1 class="display-5 fw-bold">Welcome to YelpCamp</h1>
+    <div class="col-lg-8 mx-auto">
+        <p class="lead mb-4">
+            Discover and share the best campgrounds around. Browse listings from fellow campers, or add your own favorite spot for others to explore.
+        </p>
+        <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+            <a href="/campgrounds" class="btn btn-primary btn-lg px-4 gap-3">View Campgrounds</a>
+        </div>
+    </div>
+</div>
